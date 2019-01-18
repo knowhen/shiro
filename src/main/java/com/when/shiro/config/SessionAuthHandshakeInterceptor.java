@@ -1,5 +1,6 @@
 package com.when.shiro.config;
 
+import com.when.shiro.entity.DeviceEntity;
 import com.when.shiro.entity.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
@@ -25,7 +26,8 @@ public class SessionAuthHandshakeInterceptor implements HandshakeInterceptor {
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
                                    WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
         System.out.println("Before handshake");
-        UserInfo user = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        //UserInfo user = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        DeviceEntity user = (DeviceEntity) SecurityUtils.getSubject().getPrincipal();
         if (user == null) {
             System.out.println("未登录");
             return false;

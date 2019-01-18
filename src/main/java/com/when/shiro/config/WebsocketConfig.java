@@ -1,5 +1,6 @@
 package com.when.shiro.config;
 
+import com.when.shiro.entity.DeviceEntity;
 import com.when.shiro.entity.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.context.annotation.Configuration;
@@ -46,8 +47,9 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
             @Override
             protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String,
                     Object> attributes) {
-                UserInfo user = (UserInfo) SecurityUtils.getSubject().getPrincipal();
-                return new MyPrincipal(user.getUsername());
+                //UserInfo user = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+                DeviceEntity user = (DeviceEntity) SecurityUtils.getSubject().getPrincipal();
+                return new MyPrincipal(user.getDeviceId().toString());
             }
         };
     }

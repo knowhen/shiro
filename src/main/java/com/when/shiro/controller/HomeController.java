@@ -1,5 +1,6 @@
 package com.when.shiro.controller;
 
+import com.when.shiro.form.DeviceLoginForm;
 import com.when.shiro.form.LoginForm;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -19,13 +20,13 @@ public class HomeController {
 	}
 
 	@PostMapping("/login")
-	public String login(LoginForm form) throws Exception {
+	public String login(DeviceLoginForm form) throws Exception {
 		System.out.println("HomeController.login()");
-		String username = form.getUsername();
+		String deviceId = form.getDeviceId();
 		String password = form.getPassword();
 		try {
 			Subject subject = SecurityUtils.getSubject();
-			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+			UsernamePasswordToken token = new UsernamePasswordToken(deviceId, password);
 			subject.login(token);
 		} catch (UnknownAccountException e) {
 			System.out.println(e.getMessage());
@@ -36,7 +37,7 @@ public class HomeController {
 		} catch (AuthenticationException e) {
 			System.out.println(e.getMessage());
 		}
-		return "index";
+		return "index.html";
 	}
 
 }
