@@ -17,8 +17,7 @@ import org.springframework.stereotype.Component;
  * @author: when
  * @create: 2019-01-16  14:38
  **/
-@Component
-public class CustomShiroRealm extends AuthorizingRealm {
+public class UserRealm extends AuthorizingRealm {
 
 	@Autowired
 	private UserInfoService service;

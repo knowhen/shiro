@@ -2,12 +2,15 @@ package com.when.shiro.service.impl;
 
 import com.when.shiro.dto.DeviceLoginDto;
 import com.when.shiro.entity.DeviceEntity;
+import com.when.shiro.exception.GlobalException;
 import com.when.shiro.form.DeviceLoginForm;
 import com.when.shiro.mapper.DeviceMapper;
 import com.when.shiro.service.DeviceService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,7 @@ import java.util.List;
  **/
 @Service
 public class DeviceServiceImpl implements DeviceService {
+	private static final Logger logger = LoggerFactory.getLogger(DeviceServiceImpl.class);
 	@Autowired
 	private DeviceMapper mapper;
 
@@ -29,18 +33,13 @@ public class DeviceServiceImpl implements DeviceService {
 		try {
 			Subject subject = SecurityUtils.getSubject();
 			UsernamePasswordToken token = new UsernamePasswordToken(deviceId, password);
-			token.setRememberMe(true);
 			subject.login(token);
-		} catch (UnknownAccountException e) {
-			System.out.println(e.getMessage());
-		} catch (IncorrectCredentialsException e) {
-			System.out.println(e.getMessage());
-		} catch (LockedAccountException e) {
-			System.out.println(e.getMessage());
-		} catch (AuthenticationException e) {
-			System.out.println(e.getMessage());
+			DeviceEntity device = (DeviceEntity) subject.getPrincipal();
+			return new DeviceLoginDto(device.getDeviceId(), device.getDeviceName());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw new GlobalException(e.getMessage());
 		}
-		return null;
 	}
 
 	@Override

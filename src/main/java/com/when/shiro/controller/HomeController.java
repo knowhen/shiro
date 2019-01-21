@@ -1,43 +1,26 @@
 package com.when.shiro.controller;
 
+import com.when.shiro.dto.DeviceLoginDto;
+import com.when.shiro.dto.ResponseData;
 import com.when.shiro.form.DeviceLoginForm;
-import com.when.shiro.form.LoginForm;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
-import org.apache.shiro.subject.Subject;
-import org.springframework.stereotype.Controller;
+import com.when.shiro.service.DeviceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @author: when
  * @create: 2019-01-16  14:57
  **/
-@Controller
-public class HomeController {
-	@GetMapping("/login")
-	public String getLogin() {
-		return "login.html";
-	}
+@RestController
+public class HomeController extends BaseController {
 
-	@PostMapping("/login")
-	public String login(DeviceLoginForm form) throws Exception {
-		System.out.println("HomeController.login()");
-		String deviceId = form.getDeviceId();
-		String password = form.getPassword();
-		try {
-			Subject subject = SecurityUtils.getSubject();
-			UsernamePasswordToken token = new UsernamePasswordToken(deviceId, password);
-			subject.login(token);
-		} catch (UnknownAccountException e) {
-			System.out.println(e.getMessage());
-		} catch (IncorrectCredentialsException e) {
-			System.out.println(e.getMessage());
-		} catch (LockedAccountException e) {
-			System.out.println(e.getMessage());
-		} catch (AuthenticationException e) {
-			System.out.println(e.getMessage());
-		}
-		return "index.html";
+	@Autowired
+	private DeviceService service;
+
+	@PostMapping("/shiro/login")
+	public ResponseData login(@RequestBody DeviceLoginForm form) {
+		DeviceLoginDto login = service.login(form);
+		return formatResponse(login);
 	}
 
 }

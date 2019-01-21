@@ -1,7 +1,6 @@
 package com.when.shiro.config;
 
 import com.when.shiro.entity.DeviceEntity;
-import com.when.shiro.entity.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.server.ServerHttpRequest;
@@ -28,7 +27,7 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
         registry
                 .addEndpoint("/websocket")
                 .setHandshakeHandler(getHandler())
-                .addInterceptors(new SessionAuthHandshakeInterceptor())
+                .addInterceptors(new AuthHandshakeInterceptor())
                 .setAllowedOrigins("*")
                 .withSockJS();
     }

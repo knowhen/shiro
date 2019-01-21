@@ -6,4 +6,30 @@ package com.when.shiro.dto;
  **/
 public class DeviceLoginDto {
 
+	private Long deviceId;
+	private String deviceName;
+
+	public DeviceLoginDto() {
+	}
+
+	public DeviceLoginDto(Long deviceId, String deviceName) {
+		this.deviceId = deviceId;
+		this.deviceName = deviceName;
+	}
+
+	public Long getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(Long deviceId) {
+		this.deviceId = deviceId;
+	}
+
+	public String getDeviceName() {
+		return deviceName;
+	}
+
+	public void setDeviceName(String deviceName) {
+		this.deviceName = deviceName;
+	}
 }

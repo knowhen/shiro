@@ -19,7 +19,7 @@ import java.util.Map;
  * @author: when
  * @create: 2019-01-15  16:26
  **/
-public class SessionAuthHandshakeInterceptor implements HandshakeInterceptor {
+public class AuthHandshakeInterceptor implements HandshakeInterceptor {
     //private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
