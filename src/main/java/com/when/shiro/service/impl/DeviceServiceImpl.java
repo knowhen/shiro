@@ -1,5 +1,7 @@
 package com.when.shiro.service.impl;
 
+import com.when.shiro.domain.authentication.CustomizedToken;
+import com.when.shiro.domain.authentication.LoginType;
 import com.when.shiro.dto.DeviceLoginDto;
 import com.when.shiro.entity.DeviceEntity;
 import com.when.shiro.exception.GlobalException;
@@ -32,7 +34,7 @@ public class DeviceServiceImpl implements DeviceService {
 		String password = form.getPassword();
 		try {
 			Subject subject = SecurityUtils.getSubject();
-			UsernamePasswordToken token = new UsernamePasswordToken(deviceId, password);
+			UsernamePasswordToken token = new CustomizedToken(deviceId, password, LoginType.DEVICE.getType());
 			subject.login(token);
 			DeviceEntity device = (DeviceEntity) subject.getPrincipal();
 			return new DeviceLoginDto(device.getDeviceId(), device.getDeviceName());

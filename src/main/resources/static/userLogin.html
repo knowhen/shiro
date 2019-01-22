@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <link rel="stylesheet" href="/css/login.css">
+
+</head>
+<body>
+<form class="wrapper">
+ <div class="loginBox">
+     <h3>用户登录</h3>
+     <div class="loginGroup">
+         <div class="formInput">
+             <img src="images/login/userName.png"/>
+             <input type="text" placeholder="请输入账号" id="username">
+         </div>
+         <div class="formInput">
+             <img src="images/login/password.png"/>
+             <input type="password" placeholder="请输入密码" id="password">
+         </div>
+         <p class="error"></p>
+         <!--<label class="automaticLogon"><input type="checkbox" >下次自动登录</label>-->
+         <span class="loginBtn" onclick="userLogin()" id="login">登录</span>
+     </div>
+ </div>
+
+</form>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/login.js"></script>
+</body>
+</html>

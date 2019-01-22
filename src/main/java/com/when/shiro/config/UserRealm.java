@@ -1,5 +1,6 @@
 package com.when.shiro.config;
 
+import com.when.shiro.domain.authentication.CustomizedToken;
 import com.when.shiro.entity.SysPermission;
 import com.when.shiro.entity.SysRole;
 import com.when.shiro.entity.UserInfo;
@@ -39,15 +40,16 @@ public class UserRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		System.out.println("MyShiroRealm.doGetAuthenticationInfo()");
+		CustomizedToken customizedToken = (CustomizedToken) token;
 		//获取用户的输入的账号.
-		String username = (String) token.getPrincipal();
-		System.out.println(token.getCredentials());
+		String username = customizedToken.getUsername();
+		System.out.println(username);
 		//通过username从数据库中查找 User对象，如果找到，没找到.
 		//实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
 		UserInfo userInfo = service.findByUsername(username);
 		System.out.println("----->>userInfo=" + userInfo);
 		if (userInfo == null) {
-			throw new UnknownAccountException("账号或密码不正确");
+			throw new UnknownAccountException("用户不存在");
 		}
 		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
 				userInfo, //用户名

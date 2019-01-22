@@ -1,6 +1,7 @@
 package com.when.shiro.service;
 
 import com.when.shiro.entity.UserInfo;
+import com.when.shiro.form.LoginForm;
 
 /**
  * @author: when
@@ -9,4 +10,6 @@ import com.when.shiro.entity.UserInfo;
 public interface UserInfoService {
 
 	UserInfo findByUsername(String username);
+
+	String login(LoginForm form);
 }
