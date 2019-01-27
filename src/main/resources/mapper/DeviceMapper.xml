@@ -12,4 +12,10 @@
         SELECT * FROM yrs_device
     </select>
 
+    <insert id="insert" useGeneratedKeys="true"
+            keyProperty="deviceId" keyColumn="device_id"
+            parameterType="com.when.shiro.entity.DeviceEntity">
+        INSERT INTO yrs_device(device_name, password) VALUES(#{deviceName}, #{password})
+    </insert>
+
 </mapper>

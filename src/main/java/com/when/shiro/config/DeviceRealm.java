@@ -3,11 +3,11 @@ package com.when.shiro.config;
 import com.when.shiro.entity.DeviceEntity;
 import com.when.shiro.service.DeviceService;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.credential.DefaultPasswordService;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @create: 2019-01-17  10:14
  **/
 public class DeviceRealm extends AuthorizingRealm {
-
 	@Autowired
 	private DeviceService service;
 
@@ -49,8 +48,7 @@ public class DeviceRealm extends AuthorizingRealm {
 		}
 		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
 				device, //用户名
-				device.getPassword(), //密码
-				ByteSource.Util.bytes(device.getCredentialsSalt()),
+				device.getPassword(),
 				getName()  //realm name
 		);
 		return authenticationInfo;

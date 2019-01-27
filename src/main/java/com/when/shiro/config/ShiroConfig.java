@@ -1,9 +1,9 @@
 package com.when.shiro.config;
 
 import com.when.shiro.domain.authentication.CustomizedModularRealmAuthenticator;
-import org.apache.catalina.User;
+import com.when.shiro.domain.authentication.CustomHashedCredentialsMatcher;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
-import org.apache.shiro.authc.pam.AuthenticationStrategy;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import org.apache.shiro.mgt.SecurityManager;
-import sun.security.krb5.internal.Authenticator;
 
 import java.util.*;
 
@@ -52,7 +51,9 @@ public class ShiroConfig {
 
 	@Bean("DeviceRealm")
 	public DeviceRealm DeviceRealm() {
-		return new DeviceRealm();
+		DeviceRealm realm = new DeviceRealm();
+		realm.setCredentialsMatcher(hashedCredentialsMatcher());
+		return realm;
 	}
 
 	@Bean("UserRealm")
@@ -81,5 +82,10 @@ public class ShiroConfig {
 		CustomizedModularRealmAuthenticator authenticator = new CustomizedModularRealmAuthenticator();
 		authenticator.setAuthenticationStrategy(new AtLeastOneSuccessfulStrategy());
 		return authenticator;
+	}
+
+	@Bean
+	public HashedCredentialsMatcher hashedCredentialsMatcher() {
+		return new CustomHashedCredentialsMatcher();
 	}
 }

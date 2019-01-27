@@ -15,4 +15,6 @@ public interface DeviceMapper {
 	DeviceEntity queryByDeviceId(Long deviceId);
 
 	List<DeviceEntity> queryDevices();
+
+	void insert(DeviceEntity entity);
 }

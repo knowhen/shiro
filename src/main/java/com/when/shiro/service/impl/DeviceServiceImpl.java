@@ -6,6 +6,7 @@ import com.when.shiro.dto.DeviceLoginDto;
 import com.when.shiro.entity.DeviceEntity;
 import com.when.shiro.exception.GlobalException;
 import com.when.shiro.form.DeviceLoginForm;
+import com.when.shiro.form.DeviceRegisterForm;
 import com.when.shiro.mapper.DeviceMapper;
 import com.when.shiro.service.DeviceService;
 import org.apache.shiro.SecurityUtils;
@@ -15,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.List;
 
@@ -52,5 +54,26 @@ public class DeviceServiceImpl implements DeviceService {
 	@Override
 	public List<DeviceEntity> queryDevices() {
 		return mapper.queryDevices();
+	}
+
+	@Override
+	public DeviceLoginDto register(DeviceRegisterForm form) {
+		String deviceName = form.getDeviceName();
+		String password = form.getPassword();
+		String digestPassword = DigestUtils.sha256Hex(password);
+		DeviceEntity entity = new DeviceEntity();
+		entity.setDeviceName(deviceName);
+		entity.setPassword(digestPassword);
+		save(entity);
+		return new DeviceLoginDto(entity.getDeviceId(), entity.getDeviceName());
+	}
+
+	public void save(DeviceEntity entity) {
+		try {
+			mapper.insert(entity);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw new GlobalException(e.getMessage());
+		}
 	}
 }

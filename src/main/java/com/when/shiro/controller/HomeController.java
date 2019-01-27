@@ -3,6 +3,7 @@ package com.when.shiro.controller;
 import com.when.shiro.dto.DeviceLoginDto;
 import com.when.shiro.dto.ResponseData;
 import com.when.shiro.form.DeviceLoginForm;
+import com.when.shiro.form.DeviceRegisterForm;
 import com.when.shiro.form.LoginForm;
 import com.when.shiro.service.DeviceService;
 import com.when.shiro.service.UserInfoService;
@@ -31,6 +32,12 @@ public class HomeController extends BaseController {
 	public ResponseData login(@RequestBody LoginForm form) {
 		String userName = userService.login(form);
 		return formatResponse(userName);
+	}
+
+	@PostMapping("/device/register")
+	public ResponseData register(@RequestBody DeviceRegisterForm form) {
+		DeviceLoginDto deviceInfo = deviceService.register(form);
+		return formatResponse(deviceInfo);
 	}
 
 }

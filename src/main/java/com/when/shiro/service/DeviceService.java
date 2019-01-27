@@ -3,6 +3,7 @@ package com.when.shiro.service;
 import com.when.shiro.dto.DeviceLoginDto;
 import com.when.shiro.entity.DeviceEntity;
 import com.when.shiro.form.DeviceLoginForm;
+import com.when.shiro.form.DeviceRegisterForm;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface DeviceService {
 	DeviceEntity queryByDeviceId(Long deviceId);
 
 	List<DeviceEntity> queryDevices();
+
+	DeviceLoginDto register(DeviceRegisterForm form);
 }
